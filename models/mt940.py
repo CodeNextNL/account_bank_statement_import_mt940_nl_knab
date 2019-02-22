@@ -21,7 +21,6 @@ class MT940Parser(MT940):
     def __init__(self):
         """Initialize parser - override at least header_regex."""
         super(MT940Parser, self).__init__()
-        self.mt940_type = 'KNAB'
         self.header_lines = 0
 
     def handle_tag_61(self, data):
@@ -31,16 +30,18 @@ class MT940Parser(MT940):
         if not re_61:
             raise ValueError("Cannot parse %s" % data)
         parsed_data = re_61.groupdict()
-        self.current_transaction['transferred_amount'] = (
+        self.current_transaction['amount'] = (
             str2amount(parsed_data['sign'], parsed_data['amount']))
-        self.current_transaction['eref'] = parsed_data['reference']
+        self.current_transaction['ref'] = parsed_data['reference']
         self.current_transaction['id'] = parsed_data['knabid']
 
     def handle_tag_86(self, data):
         """Parse 86 tag containing reference data."""
         if not self.current_transaction:
             return
-        codewords = ['RTRN', 'BENM', 'ORDP', 'CSID', 'BUSP', 'MARF', 'EREF',
+        codewords = ['RTRN', 'BENM', 'ORDP',
+                     'TRTP', 'NAME', 'IBAN', 'BBAN', 'BIC',
+                     'CSID', 'BUSP', 'MARF', 'EREF',
                      'PREF', 'REMI', 'ID', 'PURP', 'ULTB', 'ULTD',
                      'CREF', 'IREF', 'CNTP', 'ULTC', 'EXCH', 'CHGS', 'TRTP']
         subfields = get_subfields(data, codewords)
