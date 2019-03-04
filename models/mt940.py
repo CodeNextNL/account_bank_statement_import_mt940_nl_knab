@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
-"""Implement BankStatementParser for MT940 IBAN ING files."""
 
-import logging
+# Copyright (C) codeNext
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+
+"""Implement BankStatementParser for MT940 Knab files."""
+
 import re
 from odoo.addons.account_bank_statement_import_mt940_base.mt940 import (
     MT940, str2amount, get_subfields)
-
-_logger = logging.getLogger(__name__)
 
 
 def get_counterpart(transaction, subfield):
