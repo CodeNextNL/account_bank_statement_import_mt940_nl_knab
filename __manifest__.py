@@ -11,5 +11,8 @@
     'depends': [
         'account_bank_statement_import_mt940_base'
     ],
+    'data': [
+        'views/account_bank_statement_import.xml',
+    ],
     'installable': True,
 }
