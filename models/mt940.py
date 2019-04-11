@@ -68,7 +68,7 @@ class MT940Parser(MT940):
 
     tag_61_regex = re.compile(
         r'(?P<date>\d{6})(?P<line_date>\d{0,4})'
-        r'(?P<sign>[CD])(?P<amount>\d+,(\d{2})?)N(?P<type>.{3})'
+        r'(?P<sign>[CD])(?P<amount>\d+,(\d{1,2})?)N(?P<type>.{3})'
         r'(?P<reference>\w.{0,16})//(?P<knabid>\w{16})'
     )
 
